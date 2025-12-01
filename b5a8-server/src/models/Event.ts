@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IEvent extends Document {
   name: string;
-  type: 'Cultural' | 'Travel' | 'Sports' | 'Business' | 'Conference' | 'Workshop' | 'Family' | 'Exhibition' | 'Training' | 'Tour' | 'Food';
+  type: 'Cultural' | 'Travel' | 'Sports' | 'Business' | 'Conference' | 'Workshop' | 'Family' | 'Exhibition' | 'Training' | 'Tour' | 'Food' | 'Networking';
   date: Date;
   time: string;
   location: string;

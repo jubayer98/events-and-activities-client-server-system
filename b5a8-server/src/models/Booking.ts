@@ -6,6 +6,11 @@ export interface IBooking extends Document {
   bookingStatus: boolean;
   paymentConfirmation: boolean;
   bookingExpiry: Date;
+  transactionId?: string;
+  paymentIntentId?: string;
+  paymentAmount?: number;
+  paymentStatus?: 'pending' | 'completed' | 'failed';
+  paidAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -34,6 +39,26 @@ const bookingSchema = new Schema<IBooking>(
       type: Date,
       required: true,
       index: true, // Index for efficient expiry queries
+    },
+    transactionId: {
+      type: String,
+      sparse: true,
+    },
+    paymentIntentId: {
+      type: String,
+      sparse: true,
+    },
+    paymentAmount: {
+      type: Number,
+      min: 0,
+    },
+    paymentStatus: {
+      type: String,
+      enum: ['pending', 'completed', 'failed'],
+      default: 'pending',
+    },
+    paidAt: {
+      type: Date,
     },
   },
   {

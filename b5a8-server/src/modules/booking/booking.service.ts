@@ -96,6 +96,11 @@ class BookingService {
             throw new Error('You can only cancel your own bookings');
         }
 
+        // Check if payment is confirmed - prevent deletion if true
+        if (booking.paymentConfirmation) {
+            throw new Error('Cannot cancel a booking with confirmed payment');
+        }
+
         if (!booking.bookingStatus) {
             throw new Error('Booking is already cancelled');
         }

@@ -10,6 +10,7 @@ import { userRoutes } from './modules/user/user.routes';
 import { eventRoutes } from './modules/event/event.routes';
 import { bookingRoutes } from './modules/booking/booking.routes';
 import { reviewRoutes } from './modules/review/review.routes';
+import { paymentRoutes } from './modules/payment/payment.routes';
 import { notFound, enhancedErrorHandler } from './utils/errorHandler';
 
 dotenv.config();
@@ -22,6 +23,10 @@ app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
 }));
+
+// Stripe webhook needs raw body - must be before express.json()
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -40,6 +45,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Handle 404 - Not Found
 app.use(notFound);

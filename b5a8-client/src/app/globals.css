@@ -118,3 +118,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+[data-sonner-toast] [data-description] {
+  opacity: 1 !important;
+  color: rgb(75, 85, 99) !important;
+}
+
+[data-sonner-toast][data-theme="dark"] [data-description] {
+  color: rgb(209, 213, 219) !important;
+}
