@@ -128,7 +128,7 @@ export default function AboutPage() {
         </div>
 
         {/* Stats Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
+        <div className="bg-linear-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">
               SyncSpace by the Numbers
@@ -172,7 +172,7 @@ export default function AboutPage() {
             ].map((member) => (
               <Card key={member.name}>
                 <CardContent className="p-6 text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-20 h-20 bg-linear-to-br from-blue-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
                     {member.name.split(" ").map((n) => n[0]).join("")}
                   </div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">

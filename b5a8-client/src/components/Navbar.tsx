@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -10,19 +11,20 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function Navbar() {
+  const router = useRouter();
+  const { user, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    toast.success("Logged out successfully");
+    router.push("/");
+  };
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -76,44 +78,28 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-              <Link href="/signup">Sign Up</Link>
-            </Button>
-
-            {/* User Menu (when logged in) */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                  <Avatar>
-                    <AvatarImage src="/images/avatar-placeholder.jpg" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
+            {!user ? (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link href="/login">Login</Link>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard">Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/my-events">My Events</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/bookings">My Bookings</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/settings">Settings</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-600">
+                <Button asChild className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {user.firstName}
+                </span>
+                <Button variant="ghost" onClick={handleLogout}>
                   Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </Button>
+                <Button asChild className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -150,12 +136,28 @@ export default function Navbar() {
                     </Link>
                   ))}
                   <div className="pt-4 space-y-2">
-                    <Button variant="outline" className="w-full" asChild>
-                      <Link href="/login">Login</Link>
-                    </Button>
-                    <Button className="w-full bg-linear-to-r from-blue-600 to-purple-600" asChild>
-                      <Link href="/signup">Sign Up</Link>
-                    </Button>
+                    {!user ? (
+                      <>
+                        <Button variant="outline" className="w-full" asChild>
+                          <Link href="/login">Login</Link>
+                        </Button>
+                        <Button className="w-full bg-linear-to-r from-blue-600 to-purple-600" asChild>
+                          <Link href="/signup">Sign Up</Link>
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="px-2 py-3 border-b">
+                          <p className="text-sm font-medium">{user.firstName}</p>
+                        </div>
+                        <Button className="w-full bg-linear-to-r from-blue-600 to-purple-600" asChild>
+                          <Link href="/dashboard">Dashboard</Link>
+                        </Button>
+                        <Button variant="outline" className="w-full text-red-600" onClick={handleLogout}>
+                          Logout
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </SheetContent>

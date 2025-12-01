@@ -130,7 +130,7 @@ export default function BlogPage() {
         {/* Featured Post */}
         <Card className="mb-12 overflow-hidden">
           <div className="grid md:grid-cols-2">
-            <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-12 flex items-center justify-center">
+            <div className="bg-linear-to-br from-blue-600 to-purple-600 p-12 flex items-center justify-center">
               <div className="text-9xl">🎉</div>
             </div>
             <CardContent className="p-8 flex flex-col justify-center">
@@ -182,7 +182,7 @@ export default function BlogPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
             <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 p-12 flex items-center justify-center">
+              <div className="bg-linear-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 p-12 flex items-center justify-center">
                 <div className="text-6xl">{post.image}</div>
               </div>
               <CardContent className="p-6">
