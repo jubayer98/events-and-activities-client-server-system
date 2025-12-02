@@ -98,7 +98,7 @@ export const authApi = {
   },
 
   requestRoleChange: async () => {
-    return apiRequest('/user/request-role-change', {
+    return apiRequest('/users/request-role-change', {
       method: 'POST',
     });
   },
@@ -120,6 +120,121 @@ export const reviewApi = {
   getMyReviews: async () => {
     return apiRequest('/reviews/my-reviews', {
       method: 'GET',
+    });
+  },
+};
+
+export const userApi = {
+  getAllUsers: async () => {
+    return apiRequest('/users', {
+      method: 'GET',
+    });
+  },
+
+  getRoleChangeRequests: async () => {
+    return apiRequest('/users/role-change-requests', {
+      method: 'GET',
+    });
+  },
+
+  getUserById: async (userId: string) => {
+    return apiRequest(`/users/${userId}`, {
+      method: 'GET',
+    });
+  },
+
+  updateUserStatus: async (userId: string, status: boolean) => {
+    return apiRequest(`/users/${userId}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    });
+  },
+
+  updateUserRole: async (userId: string, role: string) => {
+    return apiRequest(`/users/${userId}/role`, {
+      method: 'PATCH',
+      body: JSON.stringify({ role }),
+    });
+  },
+
+  deleteUser: async (userId: string) => {
+    return apiRequest(`/users/${userId}`, {
+      method: 'DELETE',
+    });
+  },
+};
+
+export const eventApi = {
+  createEvent: async (eventData: {
+    name: string;
+    type: string;
+    date: string;
+    time: string;
+    location: string;
+    requiredParticipant: {
+      min: number;
+      max: number;
+    };
+    description?: string;
+    image?: string;
+    feeStatus: 'free' | 'paid';
+    joiningFee: number;
+  }) => {
+    return apiRequest('/events', {
+      method: 'POST',
+      body: JSON.stringify(eventData),
+    });
+  },
+
+  getMyEvents: async () => {
+    return apiRequest('/events/my-events', {
+      method: 'GET',
+    });
+  },
+
+  getEventById: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}`, {
+      method: 'GET',
+    });
+  },
+
+  updateEvent: async (eventId: string, eventData: {
+    name: string;
+    type: string;
+    date: string;
+    time: string;
+    location: string;
+    requiredParticipant: {
+      min: number;
+      max: number;
+    };
+    description?: string;
+    image?: string;
+    feeStatus: 'free' | 'paid';
+    joiningFee: number;
+  }) => {
+    return apiRequest(`/events/${eventId}`, {
+      method: 'PUT',
+      body: JSON.stringify(eventData),
+    });
+  },
+
+  deleteEvent: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  getAllEvents: async () => {
+    return apiRequest('/events', {
+      method: 'GET',
+    });
+  },
+
+  approveEvent: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}/approval`, {
+      method: 'PATCH',
+      body: JSON.stringify({ approvalStatus: true }),
     });
   },
 };

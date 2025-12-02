@@ -4,16 +4,14 @@ import { StarRating } from "./StarRating";
 interface RatingOverviewCardsProps {
   averageRating: number;
   totalReviews: number;
-  recentReviewsCount: number;
 }
 
 export default function RatingOverviewCards({
   averageRating,
   totalReviews,
-  recentReviewsCount,
 }: RatingOverviewCardsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Card>
         <CardHeader>
           <CardDescription>Average Rating</CardDescription>
@@ -35,15 +33,6 @@ export default function RatingOverviewCards({
         </CardHeader>
         <CardContent>
           <span className="text-4xl font-bold">{totalReviews}</span>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardDescription>Recent Reviews</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <span className="text-4xl font-bold">{recentReviewsCount}</span>
         </CardContent>
       </Card>
     </div>

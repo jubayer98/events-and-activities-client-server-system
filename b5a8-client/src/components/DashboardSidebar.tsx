@@ -12,7 +12,7 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ onClose }: DashboardSidebarProps) {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   // Define menu items based on user role
   const getMenuItems = () => {
@@ -67,15 +67,6 @@ export default function DashboardSidebar({ onClose }: DashboardSidebarProps) {
       return [
         insightsItem,
         {
-          title: "Create Event",
-          href: "/dashboard/create-event",
-          icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          ),
-        },
-        {
           title: "My Events",
           href: "/dashboard/my-events",
           icon: (
@@ -85,7 +76,7 @@ export default function DashboardSidebar({ onClose }: DashboardSidebarProps) {
           ),
         },
         {
-          title: "Reviews & Rating",
+          title: "Rating",
           href: "/dashboard/reviews",
           icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,8 +177,21 @@ export default function DashboardSidebar({ onClose }: DashboardSidebarProps) {
         </div>
       </nav>
 
-      {/* Back to Home */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+      {/* Logout and Back to Home */}
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-2">
+        <Button 
+          variant="outline" 
+          className="w-full" 
+          onClick={async () => {
+            await logout();
+            window.location.href = '/';
+          }}
+        >
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Logout
+        </Button>
         <Button variant="outline" className="w-full" asChild>
           <Link href="/">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

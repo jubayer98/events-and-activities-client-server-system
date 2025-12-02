@@ -27,7 +27,6 @@ export default function ReviewsPage() {
         <RatingOverviewCards
           averageRating={rating?.averageRating || 0}
           totalReviews={rating?.totalReviews || 0}
-          recentReviewsCount={reviews.length}
         />
 
         {rating && rating.totalReviews > 0 && (
@@ -36,8 +35,6 @@ export default function ReviewsPage() {
             totalReviews={rating.totalReviews}
           />
         )}
-
-        <ReviewsList reviews={reviews} />
       </div>
     </DashboardLayout>
   );

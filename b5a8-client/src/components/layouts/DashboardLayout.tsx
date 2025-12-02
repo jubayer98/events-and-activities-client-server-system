@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Dashboard Header */}
-          <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
+          <header className="flex-shrink-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
             {/* Mobile Menu Button */}
             <div className="lg:hidden">
               <Sheet open={isMobileSidebarOpen} onOpenChange={setIsMobileSidebarOpen}>

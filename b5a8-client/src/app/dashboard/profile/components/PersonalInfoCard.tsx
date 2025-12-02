@@ -132,9 +132,9 @@ export default function PersonalInfoCard({
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Other" id="other" />
-                    <Label htmlFor="other" className="font-normal">
-                      Other
+                    <RadioGroupItem value="Third" id="third" />
+                    <Label htmlFor="third" className="font-normal">
+                      Third
                     </Label>
                   </div>
                 </div>
