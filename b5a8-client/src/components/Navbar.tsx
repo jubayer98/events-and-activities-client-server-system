@@ -89,9 +89,6 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {user.firstName}
-                </span>
                 <Button variant="ghost" onClick={handleLogout}>
                   Logout
                 </Button>

@@ -42,4 +42,7 @@ next-env.d.ts
 
 # additional files
 /.github
-README.md
+README.md 
+LAYOUTS.md
+/src/app/dashboard/profile/page.old.tsx
+/src/app/dashboard/reviews/page.old.tsx
