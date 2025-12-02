@@ -241,7 +241,7 @@ export default function ViewEventDialog({
 
             {/* Close Button */}
             <div className="flex gap-3 pt-4">
-              {onEdit && (
+              {onEdit && event.status === "Open" && (
                 <Button
                   variant="default"
                   onClick={() => {
@@ -266,7 +266,7 @@ export default function ViewEventDialog({
                   Edit Event
                 </Button>
               )}
-              {onDelete && (
+              {onDelete && event.status === "Open" && (
                 <Button
                   variant="destructive"
                   onClick={() => {

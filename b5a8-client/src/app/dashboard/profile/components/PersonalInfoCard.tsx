@@ -120,20 +120,20 @@ export default function PersonalInfoCard({
               <RadioGroup value={gender} onValueChange={setGender} disabled={!isEditing}>
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Male" id="male" />
-                    <Label htmlFor="male" className="font-normal">
+                    <RadioGroupItem value="Male" id="Male" />
+                    <Label htmlFor="Male" className="font-normal">
                       Male
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Female" id="female" />
-                    <Label htmlFor="female" className="font-normal">
+                    <RadioGroupItem value="Female" id="Female" />
+                    <Label htmlFor="Female" className="font-normal">
                       Female
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Third" id="third" />
-                    <Label htmlFor="third" className="font-normal">
+                    <RadioGroupItem value="Third" id="Third" />
+                    <Label htmlFor="Third" className="font-normal">
                       Third
                     </Label>
                   </div>

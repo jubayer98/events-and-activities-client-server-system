@@ -225,8 +225,24 @@ export const eventApi = {
     });
   },
 
-  getAllEvents: async () => {
-    return apiRequest('/events', {
+  getAllEvents: async (params?: {
+    type?: string;
+    feeStatus?: string;
+    status?: string;
+    search?: string;
+    sortBy?: string;
+  }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.type && params.type !== 'all') queryParams.append('type', params.type);
+    if (params?.feeStatus && params.feeStatus !== 'all') queryParams.append('feeStatus', params.feeStatus);
+    if (params?.status && params.status !== 'all') queryParams.append('status', params.status);
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
+    
+    const queryString = queryParams.toString();
+    const url = queryString ? `/events?${queryString}` : '/events';
+    
+    return apiRequest(url, {
       method: 'GET',
     });
   },
@@ -235,6 +251,40 @@ export const eventApi = {
     return apiRequest(`/events/${eventId}/approval`, {
       method: 'PATCH',
       body: JSON.stringify({ approvalStatus: true }),
+    });
+  },
+
+  updateEventStatus: async (eventId: string, status: string) => {
+    return apiRequest(`/events/${eventId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    });
+  },
+};
+
+export const bookingApi = {
+  createBooking: async (eventId: string) => {
+    return apiRequest('/bookings', {
+      method: 'POST',
+      body: JSON.stringify({ eventId }),
+    });
+  },
+
+  checkBookingStatus: async (eventId: string) => {
+    return apiRequest(`/bookings/check/${eventId}`, {
+      method: 'GET',
+    });
+  },
+
+  getMyBookings: async () => {
+    return apiRequest('/bookings/my-bookings', {
+      method: 'GET',
+    });
+  },
+
+  cancelBooking: async (bookingId: string) => {
+    return apiRequest(`/bookings/${bookingId}`, {
+      method: 'DELETE',
     });
   },
 };

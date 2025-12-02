@@ -122,12 +122,12 @@ export default function SignUpPage() {
               <RadioGroup value={gender} onValueChange={setGender} required>
                 <div className="flex items-center space-x-6">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="male" id="male" />
-                    <Label htmlFor="male" className="font-normal cursor-pointer">Male</Label>
+                    <RadioGroupItem value="Male" id="Male" />
+                    <Label htmlFor="Male" className="font-normal cursor-pointer">Male</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="female" id="female" />
-                    <Label htmlFor="female" className="font-normal cursor-pointer">Female</Label>
+                    <RadioGroupItem value="Female" id="Female" />
+                    <Label htmlFor="Female" className="font-normal cursor-pointer">Female</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="Third" id="Third" />

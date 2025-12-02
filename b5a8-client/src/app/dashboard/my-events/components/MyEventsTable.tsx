@@ -43,6 +43,8 @@ export default function MyEventsTable({ events, onEventUpdated }: MyEventsTableP
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [deleteEventId, setDeleteEventId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [statusChangeEvent, setStatusChangeEvent] = useState<{ id: string; newStatus: string } | null>(null);
+  const [isChangingStatus, setIsChangingStatus] = useState(false);
 
   const handleView = (event: MyEvent) => {
     setViewEventId(event._id);
@@ -71,6 +73,29 @@ export default function MyEventsTable({ events, onEventUpdated }: MyEventsTableP
       toast.error("Failed to delete event");
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  const handleStatusChange = async () => {
+    if (!statusChangeEvent) return;
+
+    setIsChangingStatus(true);
+    try {
+      const result = await eventApi.updateEventStatus(
+        statusChangeEvent.id,
+        statusChangeEvent.newStatus
+      );
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success(`Event status changed to ${statusChangeEvent.newStatus}`);
+        setStatusChangeEvent(null);
+        onEventUpdated();
+      }
+    } catch (error) {
+      toast.error("Failed to change event status");
+    } finally {
+      setIsChangingStatus(false);
     }
   };
 
@@ -111,6 +136,22 @@ export default function MyEventsTable({ events, onEventUpdated }: MyEventsTableP
         Pending
       </Badge>
     );
+  };
+
+  // Check if event can be edited/deleted (only Open events with approvalStatus true)
+  const canModifyEvent = (event: MyEvent) => {
+    return event.status === "Open";
+  };
+
+  // Get available status changes based on current status
+  const getAvailableStatusChanges = (currentStatus: string) => {
+    if (currentStatus === "Open") {
+      return ["Completed", "Cancelled"];
+    }
+    if (currentStatus === "Full") {
+      return ["Completed"];
+    }
+    return [];
   };
 
   return (
@@ -202,7 +243,10 @@ export default function MyEventsTable({ events, onEventUpdated }: MyEventsTableP
                           View Details
                         </DropdownMenuItem>
                       )}
-                      <DropdownMenuItem onClick={() => handleEdit(event)}>
+                      <DropdownMenuItem 
+                        onClick={() => handleEdit(event)}
+                        disabled={!canModifyEvent(event)}
+                      >
                         <svg
                           className="w-4 h-4 mr-2"
                           fill="none"
@@ -218,9 +262,32 @@ export default function MyEventsTable({ events, onEventUpdated }: MyEventsTableP
                         </svg>
                         Edit Event
                       </DropdownMenuItem>
+                      {getAvailableStatusChanges(event.status).map((newStatus) => (
+                        <DropdownMenuItem
+                          key={newStatus}
+                          onClick={() => setStatusChangeEvent({ id: event._id, newStatus })}
+                          className="text-blue-600 focus:text-blue-600"
+                        >
+                          <svg
+                            className="w-4 h-4 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          Mark as {newStatus}
+                        </DropdownMenuItem>
+                      ))}
                       <DropdownMenuItem
                         onClick={() => setDeleteEventId(event._id)}
                         className="text-red-600 focus:text-red-600"
+                        disabled={!canModifyEvent(event)}
                       >
                         <svg
                           className="w-4 h-4 mr-2"
@@ -285,6 +352,33 @@ export default function MyEventsTable({ events, onEventUpdated }: MyEventsTableP
               className="bg-red-600 hover:bg-red-700"
             >
               {isDeleting ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Status Change Confirmation Dialog */}
+      <AlertDialog
+        open={!!statusChangeEvent}
+        onOpenChange={() => setStatusChangeEvent(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Change Event Status</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to change the event status to{" "}
+              <strong>{statusChangeEvent?.newStatus}</strong>? This action cannot be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleStatusChange}
+              disabled={isChangingStatus}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              {isChangingStatus ? "Changing..." : "Change Status"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

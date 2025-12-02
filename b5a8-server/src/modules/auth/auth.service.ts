@@ -50,7 +50,7 @@ class AuthService {
 
         // Check if user status is active
         if (!user.userStatus) {
-            throw new Error('Your account has been deactivated. Please contact support');
+            throw new Error('Your account has been deactivated. Please wait for admin approval.');
         }
 
         // Verify password
