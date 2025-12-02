@@ -1,6 +1,7 @@
 "use client";
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import RouteGuard from "@/components/RouteGuard";
 import ReviewsHeader from "./components/ReviewsHeader";
 import RatingOverviewCards from "./components/RatingOverviewCards";
 import RatingDistributionCard from "./components/RatingDistributionCard";
@@ -13,29 +14,33 @@ export default function ReviewsPage() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
-        <ReviewsLoadingSkeleton />
-      </DashboardLayout>
+      <RouteGuard allowedRoles={["host"]}>
+        <DashboardLayout>
+          <ReviewsLoadingSkeleton />
+        </DashboardLayout>
+      </RouteGuard>
     );
   }
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
-        <ReviewsHeader />
+    <RouteGuard allowedRoles={["host"]}>
+      <DashboardLayout>
+        <div className="space-y-6">
+          <ReviewsHeader />
 
-        <RatingOverviewCards
-          averageRating={rating?.averageRating || 0}
-          totalReviews={rating?.totalReviews || 0}
-        />
-
-        {rating && rating.totalReviews > 0 && (
-          <RatingDistributionCard
-            distribution={rating.ratingDistribution}
-            totalReviews={rating.totalReviews}
+          <RatingOverviewCards
+            averageRating={rating?.averageRating || 0}
+            totalReviews={rating?.totalReviews || 0}
           />
-        )}
-      </div>
-    </DashboardLayout>
+
+          {rating && rating.totalReviews > 0 && (
+            <RatingDistributionCard
+              distribution={rating.ratingDistribution}
+              totalReviews={rating.totalReviews}
+            />
+          )}
+        </div>
+      </DashboardLayout>
+    </RouteGuard>
   );
 }

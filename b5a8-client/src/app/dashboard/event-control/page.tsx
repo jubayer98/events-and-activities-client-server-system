@@ -1,6 +1,7 @@
 "use client";
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import RouteGuard from "@/components/RouteGuard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import EventControlHeader from "./components/EventControlHeader";
@@ -20,16 +21,19 @@ export default function EventControlPage() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      </DashboardLayout>
+      <RouteGuard allowedRoles={["admin"]}>
+        <DashboardLayout>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        </DashboardLayout>
+      </RouteGuard>
     );
   }
 
   return (
-    <DashboardLayout>
+    <RouteGuard allowedRoles={["admin"]}>
+      <DashboardLayout>
       <div className="space-y-6">
         <EventControlHeader />
 
@@ -98,5 +102,6 @@ export default function EventControlPage() {
         </Tabs>
       </div>
     </DashboardLayout>
+  </RouteGuard>
   );
 }

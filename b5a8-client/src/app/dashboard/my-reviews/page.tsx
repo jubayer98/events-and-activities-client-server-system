@@ -1,6 +1,7 @@
 "use client";
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import RouteGuard from "@/components/RouteGuard";
 import MyReviewsHeader from "./components/MyReviewsHeader";
 import MyReviewsList from "./components/MyReviewsList";
 import MyReviewsLoadingSkeleton from "./components/MyReviewsLoadingSkeleton";
@@ -11,18 +12,22 @@ export default function MyReviewsPage() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
-        <MyReviewsLoadingSkeleton />
-      </DashboardLayout>
+      <RouteGuard allowedRoles={["user"]}>
+        <DashboardLayout>
+          <MyReviewsLoadingSkeleton />
+        </DashboardLayout>
+      </RouteGuard>
     );
   }
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
-        <MyReviewsHeader />
-        <MyReviewsList reviews={reviews} />
-      </div>
-    </DashboardLayout>
+    <RouteGuard allowedRoles={["user"]}>
+      <DashboardLayout>
+        <div className="space-y-6">
+          <MyReviewsHeader />
+          <MyReviewsList reviews={reviews} />
+        </div>
+      </DashboardLayout>
+    </RouteGuard>
   );
 }

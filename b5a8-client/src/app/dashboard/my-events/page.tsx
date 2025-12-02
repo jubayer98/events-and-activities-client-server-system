@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import RouteGuard from "@/components/RouteGuard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import CreateEventDialog from "@/components/CreateEventDialog";
@@ -14,16 +15,19 @@ export default function MyEventsPage() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      </DashboardLayout>
+      <RouteGuard allowedRoles={["host"]}>
+        <DashboardLayout>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        </DashboardLayout>
+      </RouteGuard>
     );
   }
 
   return (
-    <DashboardLayout>
+    <RouteGuard allowedRoles={["host"]}>
+      <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -102,5 +106,6 @@ export default function MyEventsPage() {
         />
       </div>
     </DashboardLayout>
-  );
-}
+      </RouteGuard>
+    );
+  }

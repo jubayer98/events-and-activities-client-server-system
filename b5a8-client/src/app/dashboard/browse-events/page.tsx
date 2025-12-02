@@ -1,6 +1,7 @@
 "use client";
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import RouteGuard from "@/components/RouteGuard";
 import { Card, CardContent } from "@/components/ui/card";
 import BrowseEventsHeader from "./components/BrowseEventsHeader";
 import EventFilters from "./components/EventFilters";
@@ -13,16 +14,19 @@ export default function BrowseEventsPage() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      </DashboardLayout>
+      <RouteGuard allowedRoles={["user"]}>
+        <DashboardLayout>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        </DashboardLayout>
+      </RouteGuard>
     );
   }
 
   return (
-    <DashboardLayout>
+    <RouteGuard allowedRoles={["user"]}>
+      <DashboardLayout>
       <div className="space-y-6">
         <BrowseEventsHeader onRefresh={refetch} isRefreshing={isLoading} />
 
@@ -52,5 +56,6 @@ export default function BrowseEventsPage() {
         </div>
       </div>
     </DashboardLayout>
+  </RouteGuard>
   );
 }
