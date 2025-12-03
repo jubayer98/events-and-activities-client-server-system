@@ -11,6 +11,7 @@ import { eventRoutes } from './modules/event/event.routes';
 import { bookingRoutes } from './modules/booking/booking.routes';
 import { reviewRoutes } from './modules/review/review.routes';
 import { paymentRoutes } from './modules/payment/payment.routes';
+import { adminRoutes } from './modules/admin/admin.routes';
 import { notFound, enhancedErrorHandler } from './utils/errorHandler';
 
 dotenv.config();
@@ -46,6 +47,7 @@ app.use('/api/events', eventRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Handle 404 - Not Found
 app.use(notFound);

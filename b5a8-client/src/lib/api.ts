@@ -365,3 +365,11 @@ export const reviewApi = {
     });
   },
 };
+
+export const adminApi = {
+  getDashboardStats: async () => {
+    return apiRequest('/admin/dashboard/stats', {
+      method: 'GET',
+    });
+  },
+};

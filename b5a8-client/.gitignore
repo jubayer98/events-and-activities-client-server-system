@@ -42,9 +42,8 @@ next-env.d.ts
 
 # additional files
 /.github
-README.md 
-LAYOUTS.md
-PAYMENT_SETUP.md
-PAYMENT_HISTORY_IMPLEMENTATION.md
 /src/app/dashboard/profile/page.old.tsx
 /src/app/dashboard/reviews/page.old.tsx
+
+# Ignore all Markdown files in all directories and subdirectories
+**/*.md
