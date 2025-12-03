@@ -28,9 +28,10 @@ async function apiRequest<T = unknown>(
             };
         }
 
-        // Handle the structure: {success, message, data: {user: {...}}}
-        const userData = result.data?.user || result.data || result;
-        return { data: userData as T, message: result.message };
+        // Handle different response structures
+        // {success, message, data: {user: {...}}} or {success, message, data: {review: {...}}} or {success, message, data: [...]}
+        const responseData = result.data?.user || result.data?.review || result.data || result;
+        return { data: responseData as T, message: result.message };
     } catch (error) {
         return {
             error: error instanceof Error ? error.message : 'Network error occurred',
@@ -104,25 +105,6 @@ export const authApi = {
   },
 };
 
-export const reviewApi = {
-  getHostReviews: async (hostId: string) => {
-    return apiRequest(`/reviews/host/${hostId}`, {
-      method: 'GET',
-    });
-  },
-
-  getHostRating: async (hostId: string) => {
-    return apiRequest(`/reviews/host/${hostId}/rating`, {
-      method: 'GET',
-    });
-  },
-
-  getMyReviews: async () => {
-    return apiRequest('/reviews/my-reviews', {
-      method: 'GET',
-    });
-  },
-};
 
 export const userApi = {
   getAllUsers: async () => {
@@ -260,6 +242,24 @@ export const eventApi = {
       body: JSON.stringify({ status }),
     });
   },
+
+  getEventBookings: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}/bookings`, {
+      method: 'GET',
+    });
+  },
+
+  getEventBookingStats: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}/bookings/stats`, {
+      method: 'GET',
+    });
+  },
+
+  getEventParticipants: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}/participants`, {
+      method: 'GET',
+    });
+  },
 };
 
 export const bookingApi = {
@@ -284,6 +284,55 @@ export const bookingApi = {
 
   cancelBooking: async (bookingId: string) => {
     return apiRequest(`/bookings/${bookingId}`, {
+      method: 'DELETE',
+    });
+  },
+};
+
+export const reviewApi = {
+  createReview: async (reviewData: {
+    eventId: string;
+    rating: number;
+    comment?: string;
+  }) => {
+    return apiRequest('/reviews', {
+      method: 'POST',
+      body: JSON.stringify(reviewData),
+    });
+  },
+
+  getHostReviews: async (hostId?: string) => {
+    const endpoint = hostId ? `/reviews/host/${hostId}` : '/reviews';
+    return apiRequest(endpoint, {
+      method: 'GET',
+    });
+  },
+
+  getHostRating: async (hostId?: string) => {
+    const endpoint = hostId ? `/reviews/host/${hostId}/rating` : '/reviews/rating';
+    return apiRequest(endpoint, {
+      method: 'GET',
+    });
+  },
+
+  getMyReviews: async () => {
+    return apiRequest('/reviews/my-reviews', {
+      method: 'GET',
+    });
+  },
+
+  updateReview: async (reviewId: string, reviewData: {
+    rating: number;
+    comment?: string;
+  }) => {
+    return apiRequest(`/reviews/${reviewId}`, {
+      method: 'PUT',
+      body: JSON.stringify(reviewData),
+    });
+  },
+
+  deleteReview: async (reviewId: string) => {
+    return apiRequest(`/reviews/${reviewId}`, {
       method: 'DELETE',
     });
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { authApi } from "@/lib/api";
 
 export interface User {
@@ -17,21 +17,28 @@ interface AuthContextType {
   login: (userData: User) => void;
   logout: () => Promise<void>;
   setUser: (user: User | null) => void;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => {
-    // Check if user is already logged in on mount
-    if (typeof window !== 'undefined') {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        return JSON.parse(storedUser);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load user from localStorage only on client side after mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Failed to parse stored user:", error);
+        localStorage.removeItem("user");
       }
     }
-    return null;
-  });
+    setIsLoading(false);
+  }, []);
 
   const login = (userData: User) => {
     setUser(userData);
@@ -45,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, setUser }}>
+    <AuthContext.Provider value={{ user, login, logout, setUser, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -14,7 +14,7 @@ import { useAuth, User } from "@/contexts/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { user, login } = useAuth();
+  const { user, login, isLoading: authLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -52,13 +52,13 @@ export default function LoginPage() {
     }
   };
 
-  // Don't render the form if user is already logged in
-  if (user) {
+  // Show loading during auth check or if user is already logged in
+  if (authLoading || user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-600 via-purple-600 to-pink-600">
         <div className="text-white text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p>Redirecting...</p>
+          <p>{user ? "Redirecting..." : "Loading..."}</p>
         </div>
       </div>
     );

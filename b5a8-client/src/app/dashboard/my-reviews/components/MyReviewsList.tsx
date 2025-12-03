@@ -29,9 +29,10 @@ export interface MyReview {
 
 interface MyReviewsListProps {
   reviews: MyReview[];
+  onReviewUpdated: () => void;
 }
 
-export default function MyReviewsList({ reviews }: MyReviewsListProps) {
+export default function MyReviewsList({ reviews, onReviewUpdated }: MyReviewsListProps) {
   return (
     <Card>
       <CardHeader>
@@ -48,7 +49,11 @@ export default function MyReviewsList({ reviews }: MyReviewsListProps) {
         ) : (
           <div className="space-y-6">
             {reviews.map((review) => (
-              <MyReviewCard key={review._id} review={review} />
+              <MyReviewCard 
+                key={review._id} 
+                review={review} 
+                onReviewUpdated={onReviewUpdated}
+              />
             ))}
           </div>
         )}

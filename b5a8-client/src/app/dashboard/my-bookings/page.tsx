@@ -51,6 +51,7 @@ export default function MyBookingsPage() {
                 <BookingsTable
                   bookings={confirmedBookings}
                   showCancelButton={false}
+                  showReviewButton={true}
                   onBookingUpdated={refetch}
                 />
               </CardContent>

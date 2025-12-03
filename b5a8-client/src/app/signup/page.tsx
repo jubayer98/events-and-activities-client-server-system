@@ -12,9 +12,9 @@ import { toast } from "sonner";
 import { authApi } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function SignUpPage() {
+export default function SignupPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
@@ -57,13 +57,13 @@ export default function SignUpPage() {
     }
   };
 
-  // Don't render the form if user is already logged in
-  if (user) {
+  // Show loading during auth check or if user is already logged in
+  if (authLoading || user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-600 via-purple-600 to-pink-600">
         <div className="text-white text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p>Redirecting...</p>
+          <p>{user ? "Redirecting..." : "Loading..."}</p>
         </div>
       </div>
     );

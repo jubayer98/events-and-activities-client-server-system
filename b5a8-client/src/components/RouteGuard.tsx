@@ -10,11 +10,11 @@ interface RouteGuardProps {
 }
 
 export default function RouteGuard({ children, allowedRoles }: RouteGuardProps) {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading) {
+    if (!isLoading) {
       if (!user) {
         // Not authenticated, redirect to login
         router.push("/login");
@@ -23,10 +23,10 @@ export default function RouteGuard({ children, allowedRoles }: RouteGuardProps) 
         router.push("/unauthorized");
       }
     }
-  }, [user, loading, allowedRoles, router]);
+  }, [user, isLoading, allowedRoles, router]);
 
   // Show loading state while checking authentication
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>

@@ -1,22 +1,17 @@
 "use client";
 
-import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 
-export default function RootLayout({
+export default function ClientLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <AuthProvider>
-          {children}
-          <Toaster />
-        </AuthProvider>
-      </body>
-    </html>
+    <AuthProvider>
+      {children}
+      <Toaster />
+    </AuthProvider>
   );
 }

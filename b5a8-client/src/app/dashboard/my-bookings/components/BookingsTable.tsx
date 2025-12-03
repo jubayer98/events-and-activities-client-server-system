@@ -22,20 +22,27 @@ import {
 import { toast } from "sonner";
 import { bookingApi } from "@/lib/api";
 import { Booking } from "../hooks/useMyBookings";
+import ReviewEventDialog from "./ReviewEventDialog";
 
 interface BookingsTableProps {
   bookings: Booking[];
   showCancelButton?: boolean;
+  showReviewButton?: boolean;
   onBookingUpdated: () => void;
 }
 
 export default function BookingsTable({
   bookings,
   showCancelButton = false,
+  showReviewButton = false,
   onBookingUpdated,
 }: BookingsTableProps) {
   const [cancelBookingId, setCancelBookingId] = useState<string | null>(null);
   const [isCanceling, setIsCanceling] = useState(false);
+  const [reviewEvent, setReviewEvent] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
 
   const handleCancel = async () => {
     if (!cancelBookingId) return;
@@ -107,14 +114,16 @@ export default function BookingsTable({
               <TableHead>Fee</TableHead>
               <TableHead>Event Status</TableHead>
               <TableHead>Payment Status</TableHead>
-              {showCancelButton && <TableHead className="text-right">Actions</TableHead>}
+              {(showCancelButton || showReviewButton) && (
+                <TableHead className="text-right">Actions</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
             {bookings.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={showCancelButton ? 8 : 7}
+                  colSpan={showCancelButton || showReviewButton ? 8 : 7}
                   className="text-center py-8 text-gray-500"
                 >
                   No bookings found
@@ -177,6 +186,39 @@ export default function BookingsTable({
                       </Button>
                     </TableCell>
                   )}
+                  {showReviewButton && (
+                    <TableCell className="text-right">
+                      {booking.event.status === "Completed" ? (
+                        <Button
+                          variant="default"
+                          size="sm"
+                          onClick={() =>
+                            setReviewEvent({
+                              id: booking.event._id,
+                              name: booking.event.name,
+                            })
+                          }
+                        >
+                          <svg
+                            className="w-4 h-4 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                            />
+                          </svg>
+                          Write Review
+                        </Button>
+                      ) : (
+                        <span className="text-sm text-gray-500">-</span>
+                      )}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             )}
@@ -209,6 +251,15 @@ export default function BookingsTable({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Review Event Dialog */}
+      <ReviewEventDialog
+        open={!!reviewEvent}
+        onOpenChange={() => setReviewEvent(null)}
+        eventId={reviewEvent?.id || null}
+        eventName={reviewEvent?.name || null}
+        onReviewSubmitted={onBookingUpdated}
+      />
     </div>
   );
 }

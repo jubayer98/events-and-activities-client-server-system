@@ -8,7 +8,7 @@ import MyReviewsLoadingSkeleton from "./components/MyReviewsLoadingSkeleton";
 import { useMyReviews } from "./hooks/useMyReviews";
 
 export default function MyReviewsPage() {
-  const { reviews, isLoading } = useMyReviews();
+  const { reviews, isLoading, refetch } = useMyReviews();
 
   if (isLoading) {
     return (
@@ -25,7 +25,7 @@ export default function MyReviewsPage() {
       <DashboardLayout>
         <div className="space-y-6">
           <MyReviewsHeader />
-          <MyReviewsList reviews={reviews} />
+          <MyReviewsList reviews={reviews} onReviewUpdated={refetch} />
         </div>
       </DashboardLayout>
     </RouteGuard>
