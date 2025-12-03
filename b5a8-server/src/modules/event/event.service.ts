@@ -176,6 +176,81 @@ class EventService {
         return await Event.find({ host: hostId }).sort({ createdAt: -1 });
     }
 
+    // Get event earnings for host
+    async getEventEarnings(eventId: string, hostId: string): Promise<{
+        event: {
+            id: string;
+            name: string;
+            type: string;
+            date: Date;
+            feeStatus: string;
+            joiningFee: number;
+        };
+        bookingStats: {
+            totalBookings: number;
+            confirmedPayments: number;
+            pendingPayments: number;
+        };
+        earnings: {
+            totalRevenue: number;
+            platformFee: number;
+            platformPercentage: number;
+            hostEarnings: number;
+        };
+    }> {
+        // Verify event exists and host owns it
+        const event = await Event.findById(eventId);
+        if (!event) {
+            throw new Error('Event not found');
+        }
+
+        if (event.host.toString() !== hostId) {
+            throw new Error('You can only view earnings for your own events');
+        }
+
+        // Get booking statistics
+        const totalBookings = await Booking.countDocuments({ 
+            event: eventId,
+            bookingStatus: true 
+        });
+
+        const confirmedPayments = await Booking.countDocuments({ 
+            event: eventId,
+            bookingStatus: true,
+            paymentConfirmation: true 
+        });
+
+        const pendingPayments = totalBookings - confirmedPayments;
+
+        // Calculate earnings
+        const platformPercentage = 19; // 19% platform fee
+        const totalRevenue = event.joiningFee * confirmedPayments;
+        const platformFee = (totalRevenue * platformPercentage) / 100;
+        const hostEarnings = totalRevenue - platformFee;
+
+        return {
+            event: {
+                id: event._id.toString(),
+                name: event.name,
+                type: event.type,
+                date: event.date,
+                feeStatus: event.feeStatus,
+                joiningFee: event.joiningFee,
+            },
+            bookingStats: {
+                totalBookings,
+                confirmedPayments,
+                pendingPayments,
+            },
+            earnings: {
+                totalRevenue: parseFloat(totalRevenue.toFixed(2)),
+                platformFee: parseFloat(platformFee.toFixed(2)),
+                platformPercentage,
+                hostEarnings: parseFloat(hostEarnings.toFixed(2)),
+            },
+        };
+    }
+
     // Update approval status (admin only)
     async updateApprovalStatus(eventId: string, approvalStatus: boolean): Promise<IEvent> {
         const event = await Event.findByIdAndUpdate(

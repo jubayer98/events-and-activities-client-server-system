@@ -260,6 +260,12 @@ export const eventApi = {
       method: 'GET',
     });
   },
+
+  getEventEarnings: async (eventId: string) => {
+    return apiRequest(`/events/${eventId}/earnings`, {
+      method: 'GET',
+    });
+  },
 };
 
 export const bookingApi = {

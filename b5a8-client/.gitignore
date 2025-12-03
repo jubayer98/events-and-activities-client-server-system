@@ -45,5 +45,6 @@ next-env.d.ts
 README.md 
 LAYOUTS.md
 PAYMENT_SETUP.md
+PAYMENT_HISTORY_IMPLEMENTATION.md
 /src/app/dashboard/profile/page.old.tsx
 /src/app/dashboard/reviews/page.old.tsx

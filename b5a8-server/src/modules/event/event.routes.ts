@@ -18,6 +18,7 @@ router.get('/:id', optionalAuth, eventController.getEventById);
 router.get('/:id/bookings', authenticate, bookingController.getEventBookings);
 router.get('/:id/bookings/stats', authenticate, bookingController.getEventBookingStats);
 router.get('/:id/participants', authenticate, isHost, bookingController.getEventParticipants);
+router.get('/:id/earnings', authenticate, isHost, eventController.getEventEarnings);
 
 // Admin-only routes (approval management)
 router.patch('/:id/approval', authenticate, isAdmin, eventController.updateApprovalStatus);

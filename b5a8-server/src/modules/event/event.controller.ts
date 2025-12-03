@@ -186,6 +186,20 @@ class EventController {
         });
     });
 
+    // Get event earnings for host
+    getEventEarnings = catchAsync(async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const hostId = req.user?.id;
+
+        const earnings = await eventService.getEventEarnings(id, hostId!);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Event earnings retrieved successfully',
+            data: earnings,
+        });
+    });
+
     // Update approval status (admin only)
     updateApprovalStatus = catchAsync(async (req: Request, res: Response) => {
         const { id } = req.params;
