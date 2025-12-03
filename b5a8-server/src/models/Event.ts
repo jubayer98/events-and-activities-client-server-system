@@ -31,7 +31,7 @@ const eventSchema = new Schema<IEvent>(
     },
     type: {
       type: String,
-      enum: ['Cultural', 'Travel', 'Sports', 'Business', 'Conference', 'Workshop', 'Family', 'Exhibition', 'Training', 'Tour', 'Food'],
+      enum: ['Cultural', 'Travel', 'Sports', 'Business', 'Conference', 'Workshop', 'Family', 'Exhibition', 'Training', 'Tour', 'Food', 'Networking'],
       required: [true, 'Event type is required'],
     },
     date: {
