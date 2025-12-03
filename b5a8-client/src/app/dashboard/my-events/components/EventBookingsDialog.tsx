@@ -102,6 +102,7 @@ export default function EventBookingsDialog({
     if (open && eventId) {
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, eventId]);
 
   const fetchData = async () => {
@@ -237,8 +238,9 @@ export default function EventBookingsDialog({
                           <TableRow key={booking._id}>
                             <TableCell className="font-medium">
                               <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
                                   {booking.user.profileImage ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
                                     <img
                                       src={booking.user.profileImage}
                                       alt={booking.user.fullName}
@@ -343,6 +345,7 @@ export default function EventBookingsDialog({
                                   <div className="flex items-center gap-3 mb-3">
                                     <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
                                       {participant.user.profileImage ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
                                         <img
                                           src={participant.user.profileImage}
                                           alt={participant.user.fullName}

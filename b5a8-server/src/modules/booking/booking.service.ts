@@ -158,6 +158,41 @@ class BookingService {
             .sort({ createdAt: -1 });
     }
 
+    // Get user's payment history
+    async getUserPaymentHistory(userId: string): Promise<any[]> {
+        const bookings = await Booking.find({
+            user: userId,
+            paymentConfirmation: true,
+            transactionId: { $exists: true, $ne: null }
+        })
+            .populate('event', 'name _id type date location feeStatus joiningFee')
+            .sort({ paidAt: -1 });
+
+        return bookings.map(booking => {
+            const event = booking.event as any;
+            return {
+                paymentId: booking.transactionId,
+                transactionId: booking.transactionId,
+                paymentIntentId: booking.paymentIntentId,
+                amount: booking.paymentAmount || event?.joiningFee || 0,
+                paymentStatus: booking.paymentStatus,
+                paidAt: booking.paidAt,
+                event: {
+                    id: event?._id,
+                    name: event?.name,
+                    type: event?.type,
+                    date: event?.date,
+                    location: event?.location,
+                },
+                booking: {
+                    id: booking._id,
+                    bookingDate: booking.createdAt,
+                    bookingStatus: booking.bookingStatus,
+                }
+            };
+        });
+    }
+
     // Get single booking by ID
     async getBookingById(bookingId: string, userId?: string): Promise<IBooking | null> {
         const booking = await Booking.findById(bookingId)

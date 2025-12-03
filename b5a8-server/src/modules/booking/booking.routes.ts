@@ -6,6 +6,7 @@ const router = Router();
 
 // Specific routes must come before dynamic :id routes
 router.get('/my-bookings', authenticate, bookingController.getMyBookings);
+router.get('/payment-history', authenticate, bookingController.getPaymentHistory);
 router.post('/process-expired', authenticate, isAdmin, bookingController.processExpiredBookings);
 
 // User routes (authenticated users with 'user' role)

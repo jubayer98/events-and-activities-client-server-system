@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -12,6 +13,13 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { eventApi, bookingApi, reviewApi } from "@/lib/api";
 import { Event } from "../hooks/useBrowseEvents";
+
+interface HostDetails {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 interface ViewEventDialogProps {
   open: boolean;
@@ -41,6 +49,7 @@ export default function ViewEventDialog({
       fetchEvent();
       checkBookingStatus();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, eventId]);
 
   const fetchEvent = async () => {
@@ -55,7 +64,7 @@ export default function ViewEventDialog({
       } else {
         setEvent((result.data as any)?.event || null);
       }
-    } catch (_error) {
+    } catch {
       toast.error("Failed to load event details");
       setEvent(null);
     } finally {
@@ -64,10 +73,13 @@ export default function ViewEventDialog({
   };
 
   const fetchHostRating = async () => {
-    if (!event?.host?._id) return;
+    if (!event?.host) return;
+
+    const hostId = typeof event.host === 'string' ? event.host : (event.host as HostDetails)._id;
+    if (!hostId) return;
 
     try {
-      const result = await reviewApi.getHostRating(event.host._id);
+      const result = await reviewApi.getHostRating(hostId);
       if (!result.error) {
         const ratingData = (result.data as any);
         setHostRating({
@@ -75,7 +87,7 @@ export default function ViewEventDialog({
           totalReviews: ratingData?.totalReviews || 0,
         });
       }
-    } catch (_error) {
+    } catch {
       // Silently fail for rating fetch
       setHostRating(null);
     }
@@ -83,10 +95,11 @@ export default function ViewEventDialog({
 
   // Fetch host rating when event is loaded
   useEffect(() => {
-    if (event?.host?._id) {
+    if (event?.host) {
       fetchHostRating();
     }
-  }, [event?.host?._id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event?.host]);
 
   const checkBookingStatus = async () => {
     if (!eventId) return;
@@ -98,7 +111,7 @@ export default function ViewEventDialog({
         const bookingData = (result.data as any);
         setIsBooked(bookingData?.isBooked || false);
       }
-    } catch (_error) {
+    } catch {
       // Silently fail for booking check
       setIsBooked(false);
     } finally {
@@ -120,7 +133,7 @@ export default function ViewEventDialog({
         // Refresh event data to get updated participant count
         fetchEvent();
       }
-    } catch (_error) {
+    } catch {
       toast.error("Failed to book event");
     } finally {
       setIsBooking(false);
@@ -264,9 +277,11 @@ export default function ViewEventDialog({
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-base font-medium">
-                      {event.host.firstName} {event.host.lastName}
+                      {typeof event.host === 'string' ? 'Host' : `${(event.host as HostDetails).firstName} ${(event.host as HostDetails).lastName}`}
                     </p>
-                    <p className="text-sm text-gray-500">{event.host.email}</p>
+                    <p className="text-sm text-gray-500">
+                      {typeof event.host === 'string' ? event.host : (event.host as HostDetails).email}
+                    </p>
                   </div>
                   {hostRating && hostRating.totalReviews > 0 && (
                     <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded-lg">
@@ -308,6 +323,36 @@ export default function ViewEventDialog({
               {event.status === "Open" && (
                 <>
                   <Separator />
+                  
+                  {/* Payment Info for Paid Events */}
+                  {event.feeStatus === "paid" && !isBooked && (
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <svg
+                          className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1">
+                            Payment Required
+                          </h4>
+                          <p className="text-sm text-blue-800 dark:text-blue-200">
+                            This is a paid event. After booking, you can complete the payment from the <span className="font-semibold">My Bookings</span> page.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex gap-4 pt-2">
                     {isBooked ? (
                       <Button

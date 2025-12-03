@@ -66,6 +66,23 @@ class BookingController {
         });
     });
 
+    // Get user's payment history
+    getPaymentHistory = catchAsync(async (req: Request, res: Response) => {
+        const userId = req.user?.id;
+
+        const paymentHistory = await bookingService.getUserPaymentHistory(userId!);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Payment history retrieved successfully',
+            data: { 
+                payments: paymentHistory, 
+                count: paymentHistory.length,
+                totalPaid: paymentHistory.reduce((sum, p) => sum + p.amount, 0)
+            },
+        });
+    });
+
     // Get single booking by ID
     getBookingById = catchAsync(async (req: Request, res: Response) => {
         const userId = req.user?.id;

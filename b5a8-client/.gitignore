@@ -44,5 +44,6 @@ next-env.d.ts
 /.github
 README.md 
 LAYOUTS.md
+PAYMENT_SETUP.md
 /src/app/dashboard/profile/page.old.tsx
 /src/app/dashboard/reviews/page.old.tsx

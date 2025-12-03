@@ -289,6 +289,28 @@ export const bookingApi = {
   },
 };
 
+export const paymentApi = {
+  createPaymentIntent: async (bookingId: string) => {
+    return apiRequest('/payments/create-intent', {
+      method: 'POST',
+      body: JSON.stringify({ bookingId }),
+    });
+  },
+
+  confirmPayment: async (bookingId: string, paymentIntentId: string) => {
+    return apiRequest('/payments/confirm', {
+      method: 'POST',
+      body: JSON.stringify({ bookingId, paymentIntentId }),
+    });
+  },
+
+  getPaymentStatus: async (bookingId: string) => {
+    return apiRequest(`/payments/status/${bookingId}`, {
+      method: 'GET',
+    });
+  },
+};
+
 export const reviewApi = {
   createReview: async (reviewData: {
     eventId: string;

@@ -66,8 +66,15 @@ const bookingSchema = new Schema<IBooking>(
   }
 );
 
-// Create a compound index to prevent duplicate bookings
-bookingSchema.index({ user: 1, event: 1 }, { unique: true });
+// Create a compound index to prevent duplicate active bookings
+// Partial index only applies when bookingStatus is true
+bookingSchema.index(
+  { user: 1, event: 1 }, 
+  { 
+    unique: true,
+    partialFilterExpression: { bookingStatus: true }
+  }
+);
 
 // Ensure virtuals are included when converting to JSON
 bookingSchema.set('toJSON', {

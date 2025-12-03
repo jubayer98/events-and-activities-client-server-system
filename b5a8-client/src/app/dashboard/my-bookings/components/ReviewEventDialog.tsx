@@ -66,8 +66,9 @@ export default function ReviewEventDialog({
           onReviewSubmitted();
         }
       }
-    } catch (_error) {
+    } catch (error) {
       toast.error("Failed to submit review");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }

@@ -4,6 +4,7 @@ import { bookingApi } from "@/lib/api";
 import { toast } from "sonner";
 
 export interface Booking {
+  bookingExpiry: string;
   _id: string;
   user: string;
   event: {
