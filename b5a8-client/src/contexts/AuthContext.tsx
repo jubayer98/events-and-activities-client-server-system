@@ -10,6 +10,7 @@ export interface User {
   email: string;
   gender?: string;
   role: "admin" | "host" | "user";
+  profileImage?: string | null;
 }
 
 interface AuthContextType {
@@ -28,16 +29,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Load user from localStorage only on client side after mount
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Failed to parse stored user:", error);
-        localStorage.removeItem("user");
+    const loadUser = async () => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+          
+          // Fetch fresh user data from backend to sync profile image and other updates
+          const result = await authApi.getProfile();
+          if (result.data) {
+            const updatedUser = result.data as User;
+            setUser(updatedUser);
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+          }
+        } catch (error) {
+          console.error("Failed to load user profile:", error);
+          localStorage.removeItem("user");
+        }
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    };
+
+    loadUser();
   }, []);
 
   const login = (userData: User) => {
@@ -51,8 +65,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem("user");
   };
 
+  // Update setUser to also persist to localStorage
+  const updateUser = (userData: User | null) => {
+    setUser(userData);
+    if (userData) {
+      localStorage.setItem("user", JSON.stringify(userData));
+    } else {
+      localStorage.removeItem("user");
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, setUser, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, setUser: updateUser, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

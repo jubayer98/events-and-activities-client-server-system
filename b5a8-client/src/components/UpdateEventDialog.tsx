@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import EventImageUploader from "@/components/cloudinary/EventImageUploader";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
@@ -336,15 +337,12 @@ export default function UpdateEventDialog({
               />
             </div>
 
-            {/* Image URL */}
+            {/* Event Image Upload */}
             <div className="space-y-2">
-              <Label htmlFor="image">Image URL</Label>
-              <Input
-                id="image"
-                type="url"
-                placeholder="https://example.com/image.jpg (optional)"
-                value={formData.image}
-                onChange={(e) => handleChange("image", e.target.value)}
+              <Label>Event Cover Image</Label>
+              <EventImageUploader
+                currentImage={formData.image}
+                onUploadSuccess={(url) => handleChange("image", url)}
               />
             </div>
 

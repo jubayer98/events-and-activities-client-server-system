@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import ProfileImageUploader from "@/components/cloudinary/ProfileImageUploader";
 
 interface PersonalInfoCardProps {
   isEditing: boolean;
@@ -153,17 +154,31 @@ export default function PersonalInfoCard({
               />
             </div>
 
-            {/* Profile Image URL */}
-            <div className="space-y-2">
-              <Label htmlFor="profileImage">Profile Image URL</Label>
-              <Input
-                id="profileImage"
-                value={profileImage}
-                onChange={(e) => setProfileImage(e.target.value)}
-                disabled={!isEditing}
-                placeholder="https://..."
-              />
-            </div>
+            {/* Profile Image Upload */}
+            {isEditing && (
+              <div className="md:col-span-2">
+                <ProfileImageUploader
+                  currentImage={profileImage}
+                  onUpdateSuccess={() => {
+                    // Profile is auto-updated via the component
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Show current image when not editing */}
+            {!isEditing && profileImage && (
+              <div className="space-y-2 md:col-span-2">
+                <Label>Profile Image</Label>
+                <div className="flex items-center gap-4">
+                  <img
+                    src={profileImage}
+                    alt="Profile"
+                    className="w-20 h-20 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Interests */}
             <div className="space-y-2 md:col-span-2">

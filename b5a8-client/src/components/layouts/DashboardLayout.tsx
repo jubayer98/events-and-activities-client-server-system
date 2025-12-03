@@ -19,18 +19,13 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
+  // Update profile image when user changes
   useEffect(() => {
-    // Simulate initial loading state
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [user]);
+    console.log("User profile image updated:", user?.profileImage);
+  }, [user?.profileImage]);
 
   const handleLogout = async () => {
     await logout();
@@ -97,9 +92,29 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
             {/* Header Actions */}
             <div className="flex items-center space-x-4">
-              {/* User Name */}
-              <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {user?.firstName} {user?.lastName}
+              {/* User Profile */}
+              <div className="flex items-center gap-3">
+                {/* Profile Image or Avatar */}
+                <div className="relative">
+                  {user?.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt={`${user?.firstName} ${user?.lastName}`}
+                      className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center border-2 border-gray-200 dark:border-gray-700">
+                      <span className="text-white font-semibold text-sm">
+                        {user?.firstName?.[0]}{user?.lastName?.[0]}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                
+                {/* User Name */}
+                <div className="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {user?.firstName} {user?.lastName}
+                </div>
               </div>
             </div>
           </header>
