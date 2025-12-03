@@ -200,6 +200,19 @@ class EventController {
         });
     });
 
+    // Get host dashboard statistics
+    getHostDashboard = catchAsync(async (req: Request, res: Response) => {
+        const hostId = req.user?.id;
+
+        const stats = await eventService.getHostDashboardStats(hostId!);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Host dashboard statistics retrieved successfully',
+            data: stats,
+        });
+    });
+
     // Update approval status (admin only)
     updateApprovalStatus = catchAsync(async (req: Request, res: Response) => {
         const { id } = req.params;

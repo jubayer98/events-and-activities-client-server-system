@@ -7,6 +7,7 @@ const router = Router();
 
 // Host-only routes (must come before dynamic :id routes)
 router.get('/my-events', authenticate, isHost, eventController.getMyEvents);
+router.get('/dashboard/stats', authenticate, isHost, eventController.getHostDashboard);
 router.post('/', authenticate, isHost, eventController.createEvent);
 router.put('/:id', authenticate, isHost, eventController.updateEvent);
 

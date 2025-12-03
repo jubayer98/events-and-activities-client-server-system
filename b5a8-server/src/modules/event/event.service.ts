@@ -251,6 +251,110 @@ class EventService {
         };
     }
 
+    // Get host dashboard statistics
+    async getHostDashboardStats(hostId: string): Promise<{
+        events: {
+            total: number;
+            byStatus: {
+                open: number;
+                full: number;
+                completed: number;
+                cancelled: number;
+            };
+            byFeeType: {
+                free: number;
+                paid: number;
+            };
+        };
+        bookings: {
+            total: number;
+            confirmedPayments: number;
+        };
+        revenue: {
+            totalRevenue: number;
+            platformFee: number;
+            platformPercentage: number;
+            hostEarnings: number;
+        };
+    }> {
+        // Verify user is a host
+        const user = await User.findById(hostId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        if (user.role !== 'host') {
+            throw new Error('Only hosts can access this dashboard');
+        }
+
+        // Get all events created by this host
+        const hostEvents = await Event.find({ host: hostId });
+        const eventIds = hostEvents.map(event => event._id);
+
+        // Event statistics
+        const totalEvents = hostEvents.length;
+        const openEvents = hostEvents.filter(e => e.status === 'Open').length;
+        const fullEvents = hostEvents.filter(e => e.status === 'Full').length;
+        const completedEvents = hostEvents.filter(e => e.status === 'Completed').length;
+        const cancelledEvents = hostEvents.filter(e => e.status === 'Cancelled').length;
+        const freeEvents = hostEvents.filter(e => e.feeStatus === 'free').length;
+        const paidEvents = hostEvents.filter(e => e.feeStatus === 'paid').length;
+
+        // Booking statistics
+        const totalBookings = await Booking.countDocuments({
+            event: { $in: eventIds },
+            bookingStatus: true
+        });
+
+        const confirmedPayments = await Booking.countDocuments({
+            event: { $in: eventIds },
+            bookingStatus: true,
+            paymentConfirmation: true
+        });
+
+        // Revenue calculation
+        const completedPaymentBookings = await Booking.find({
+            event: { $in: eventIds },
+            paymentConfirmation: true,
+            paymentStatus: 'completed',
+            paymentAmount: { $exists: true, $ne: null }
+        }).select('paymentAmount');
+
+        const totalRevenue = completedPaymentBookings.reduce((sum, booking) => {
+            return sum + (booking.paymentAmount || 0);
+        }, 0);
+
+        const platformPercentage = 19;
+        const platformFee = (totalRevenue * platformPercentage) / 100;
+        const hostEarnings = totalRevenue - platformFee;
+
+        return {
+            events: {
+                total: totalEvents,
+                byStatus: {
+                    open: openEvents,
+                    full: fullEvents,
+                    completed: completedEvents,
+                    cancelled: cancelledEvents,
+                },
+                byFeeType: {
+                    free: freeEvents,
+                    paid: paidEvents,
+                },
+            },
+            bookings: {
+                total: totalBookings,
+                confirmedPayments,
+            },
+            revenue: {
+                totalRevenue: parseFloat(totalRevenue.toFixed(2)),
+                platformFee: parseFloat(platformFee.toFixed(2)),
+                platformPercentage,
+                hostEarnings: parseFloat(hostEarnings.toFixed(2)),
+            },
+        };
+    }
+
     // Update approval status (admin only)
     async updateApprovalStatus(eventId: string, approvalStatus: boolean): Promise<IEvent> {
         const event = await Event.findByIdAndUpdate(

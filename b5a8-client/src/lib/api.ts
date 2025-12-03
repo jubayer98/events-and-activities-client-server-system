@@ -373,3 +373,11 @@ export const adminApi = {
     });
   },
 };
+
+export const hostApi = {
+  getDashboardStats: async () => {
+    return apiRequest('/events/dashboard/stats', {
+      method: 'GET',
+    });
+  },
+};

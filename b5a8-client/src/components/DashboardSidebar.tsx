@@ -99,7 +99,6 @@ export default function DashboardSidebar({ onClose }: DashboardSidebarProps) {
 
     // Default user role
     return [
-      insightsItem,
       {
         title: "Browse Events",
         href: "/dashboard/browse-events",
