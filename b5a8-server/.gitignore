@@ -2,6 +2,10 @@ node_modules
 dist
 .env
 *.log
+.DS_Store
+
+# Railway
+.railway
 
 # Ignore all Markdown files in all directories and subdirectories
 **/*.md
