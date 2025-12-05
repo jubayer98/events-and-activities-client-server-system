@@ -36,17 +36,18 @@ class AuthController {
         });
 
         // Set tokens in cookies
+        const isProduction = process.env.NODE_ENV === 'production';
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 70 * 24 * 60 * 60 * 1000, // 70 days
         });
 
@@ -80,17 +81,18 @@ class AuthController {
         const { user, accessToken, refreshToken } = await authService.login(email, password);
 
         // Set tokens in cookies
+        const isProduction = process.env.NODE_ENV === 'production';
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
 
@@ -245,17 +247,18 @@ class AuthController {
         const { accessToken, refreshToken: newRefreshToken } = await authService.refreshAccessToken(refreshToken);
 
         // Set new tokens in cookies
+        const isProduction = process.env.NODE_ENV === 'production';
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
 
         res.cookie('refreshToken', newRefreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 70 * 24 * 60 * 60 * 1000, // 70 days
         });
 
