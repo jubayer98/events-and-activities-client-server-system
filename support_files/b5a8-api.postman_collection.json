@@ -1,0 +1,1267 @@
+{
+	"info": {
+		"_postman_id": "3701d76e-91de-4928-afbf-254bcd858b48",
+		"name": "b5a8-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45833979"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Jubayer\",\n    \"lastName\": \"Alam\",\n    \"email\": \"jubayer.alam@syncspace.com\",\n    \"password\": \"Jubayer@123\",\n    \"gender\": \"Male\"\n\n    //\"firstName\": \"John\",\n    //\"lastName\": \"Doe\",\n    //\"email\": \"john.doe@syncspace.com\",\n    //\"password\": \"John@123\",\n    //\"gender\": \"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/register",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    //\"email\": \"emily.white@syncspace.com\",\n    //\"password\": \"Emily@123\"\n\n    //\"email\": \"john.doe@syncspace.com\",\n    //\"password\": \"John@123\"\n\n    \"email\": \"david.brown@syncspace.com\",\n    \"password\": \"David@123\"\n\n    //\"email\": \"max.plank@syncspace.com\",\n    //\"password\": \"Max@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/login",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/logout",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"Jubayer@123\",\n    \"newPassword\": \"Emily@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/change-password",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@syncspace.com\",\n    \"password\": \"Admin@123\"\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/me",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"firstName\": \"Emily\",\n   \"lastName\": \"White\",\n   \"gender\": \"Female\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/me",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "refreshToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmQ5YjBkN2QwNmIzNzNmODA1OWIzOCIsImVtYWlsIjoiZW1pbHkud2hpdGVAc3luY3NwYWNlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY0NTk3NTgwLCJleHAiOjE3NzA2NDU1ODB9.dTtwz6g-UtriYJPCkCC5nf3Pd72tFBSNl5fDYkcXw0M",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@syncspace.com\",\n    \"password\": \"Admin@123\"\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/refresh-token",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "request-role-change",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users/request-role-change",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users",
+								"request-role-change"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@syncspace.com\",\n    \"password\": \"Admin@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/login",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users/692d898bceb675079994ec56",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users",
+								"692d898bceb675079994ec56"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/auth/logout",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@syncspace.com\",\n    \"password\": \"Admin@123\"\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users/692d9b0d7d06b373f8059b38",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users",
+								"692d9b0d7d06b373f8059b38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role-change-requests",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@syncspace.com\",\n    \"password\": \"Admin@123\"\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users/role-change-requests",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users",
+								"role-change-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user-status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users/692d9b0d7d06b373f8059b38/status",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users",
+								"692d9b0d7d06b373f8059b38",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user-role",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/users/692e1ef2a0d13177d835dbc9/role",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"users",
+								"692e1ef2a0d13177d835dbc9",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "event-approval-status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"approvalStatus\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/692dabe6ba7b7facbbcedcc8/approval",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"692dabe6ba7b7facbbcedcc8",
+								"approval"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "process-expired",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/bookings/process-expired",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"bookings",
+								"process-expired"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dashboard-stats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"emily.white@syncspace.com\",\n    \"password\": \"Emily@123\"\n\n    //\"email\": \"john.doe@syncspace.com\",\n    //\"password\": \"John@123\"\n\n    //\"email\": \"david.brown@syncspace.com\",\n    //\"password\": \"David@123\"\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/admin/dashboard/stats",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"admin",
+								"dashboard",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event",
+			"item": [
+				{
+					"name": "new-event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 2,\n        \"max\": 3\n    },\n    \"feeStatus\": \"paid\",\n    \"joiningFee\": 100,\n    \"description\": \"An exciting community football competition bringing together local teams for a day of sports and fun.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all-events",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Cultural",
+									"disabled": true
+								},
+								{
+									"key": "feeStatus",
+									"value": "paid",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "berlin",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Open",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "joiningFee-desc",
+									"disabled": true
+								},
+								{
+									"key": "sortyBy",
+									"value": "date-desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-event",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/692ef7a050b3191b9f19d7cb",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"692ef7a050b3191b9f19d7cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/my-events",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"my-events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/692da8ab5cccc71b5325e1cb",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"692da8ab5cccc71b5325e1cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-booking-info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/69300ded680061d4c9da729e/bookings",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"69300ded680061d4c9da729e",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-booking-stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/69300ded680061d4c9da729e/bookings/stats",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"69300ded680061d4c9da729e",
+								"bookings",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-booking-participants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/692efa9650b3191b9f19d7f3/participants",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"692efa9650b3191b9f19d7f3",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-event",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"Completed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/692dab96ba7b7facbbcedcc5",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"692dab96ba7b7facbbcedcc5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "event-earning",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/69300ded680061d4c9da729e/earnings",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"69300ded680061d4c9da729e",
+								"earnings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-events-insight",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"emily.white@syncspace.com\",\n    \"password\": \"Emily@123\"\n\n    //\"email\": \"john.doe@syncspace.com\",\n    //\"password\": \"John@123\"\n\n    //\"email\": \"david.brown@syncspace.com\",\n    //\"password\": \"David@123\"\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/events/dashboard/stats",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"events",
+								"dashboard",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "booking",
+			"item": [
+				{
+					"name": "my-bookings",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/bookings/my-bookings",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"bookings",
+								"my-bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-booking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/bookings/",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"bookings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "event-booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventId\": \"692efa9650b3191b9f19d7f3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/bookings",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel-booking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/bookings/692f04fd95527de7f63ccec2",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"bookings",
+								"692f04fd95527de7f63ccec2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review",
+			"item": [
+				{
+					"name": "my-reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews/my-reviews",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"my-reviews"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Cultural",
+									"disabled": true
+								},
+								{
+									"key": "feeStatus",
+									"value": "paid",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "berlin",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Open",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "joiningFee-desc",
+									"disabled": true
+								},
+								{
+									"key": "sortyBy",
+									"value": "date-desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "host-reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews/host/692d9a877d06b373f8059b27",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"host",
+								"692d9a877d06b373f8059b27"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Cultural",
+									"disabled": true
+								},
+								{
+									"key": "feeStatus",
+									"value": "paid",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "berlin",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Open",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "joiningFee-desc",
+									"disabled": true
+								},
+								{
+									"key": "sortyBy",
+									"value": "date-desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "event-reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews/event/692dab96ba7b7facbbcedcc5",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"event",
+								"692dab96ba7b7facbbcedcc5"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Cultural",
+									"disabled": true
+								},
+								{
+									"key": "feeStatus",
+									"value": "paid",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "berlin",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Open",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "joiningFee-desc",
+									"disabled": true
+								},
+								{
+									"key": "sortyBy",
+									"value": "date-desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "host-rating",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Summer Football Tournament\",\n    \"type\": \"Sports\",\n    \"date\": \"2025-07-10\",\n    \"time\": \"15:00\",\n    \"location\": \"Munich Olympic Stadium\",\n    \"requiredParticipant\": {\n        \"min\": 1,\n        \"max\": 3\n    },\n    \"feeStatus\": \"free\",\n    \"joiningFee\": 100\n}"
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews/host/692d9a877d06b373f8059b27/rating",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"host",
+								"692d9a877d06b373f8059b27",
+								"rating"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Cultural",
+									"disabled": true
+								},
+								{
+									"key": "feeStatus",
+									"value": "paid",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "berlin",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Open",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "joiningFee-desc",
+									"disabled": true
+								},
+								{
+									"key": "sortyBy",
+									"value": "date-desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventId\": \"692dab96ba7b7facbbcedcc5\",\n    \"rating\": 5, // 1-5 stars\n    \"comment\": \"Great host and amazing event!\" // optional\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-review",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 3,\n    \"comment\": \"nice event and host. good job\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews/693003cb680061d4c9da7184",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"693003cb680061d4c9da7184"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/reviews/693003cb680061d4c9da7184",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"693003cb680061d4c9da7184"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "payment-status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/payments/status/69301a023f1f3e48243bfaeb/",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"payments",
+								"status",
+								"69301a023f1f3e48243bfaeb",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-intent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookingId\": \"693010c5680061d4c9da72ec\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/payments/create-intent",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"payments",
+								"create-intent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment-confirmation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookingId\": \"692dccbad23e7b8c119a9d07\",\n    \"paymentIntentId\": \"pi_3SZapdDQWoq9wIyD0kFIwiVF\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{b5a8BaseUrl}}/payments/confirm",
+							"host": [
+								"{{b5a8BaseUrl}}"
+							],
+							"path": [
+								"payments",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "b5a8BaseUrl",
+			"value": ""
+		}
+	]
+}
