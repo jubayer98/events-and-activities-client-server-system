@@ -1,6 +1,5 @@
 # 🎉 SyncSpace -- Full-Stack Events & Activities Management Platform
 
-::: {align="center"}
 ![Next.js](https://img.shields.io/badge/Next.js-16.0.5-black?style=for-the-badge&logo=next.js)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)
@@ -17,13 +16,12 @@ elegant UI.
 
 [Live
 Client](https://b5a8-client-fkqhpd2e4-jubayer-alams-projects.vercel.app)
-·\
+\
 [Backend
 Repo](https://github.com/jubayer98/events-and-activities-client-server-system/tree/main/b5a8-server)
-·\
+\
 [Frontend
 Repo](https://github.com/jubayer98/events-and-activities-client-server-system/tree/main/b5a8-client)
-:::
 
 ------------------------------------------------------------------------
 
@@ -43,25 +41,24 @@ flowchart LR
 
 ## 🖥️ Frontend (Next.js)
 
--   Modern landing page with animated sections\
--   Dashboard system for Users, Hosts & Admin\
--   Cloudinary upload widget with previews\
--   Payment flow powered by Stripe Elements\
--   Theme-aware UI (dark/light)\
--   Loading skeletons, transitions & accessibility support\
+-   Modern landing page with animated sections
+-   Dashboard system for Users, Hosts & Admin
+-   Cloudinary upload widget with previews
+-   Payment flow powered by Stripe Elements
+-   Loading skeletons, transitions & accessibility support
 -   Powerful event filtering (search, category, fee, status)
 
 ------------------------------------------------------------------------
 
 ## 🔐 Backend (Node + Express + TS)
 
--   Strict TypeScript typing across entire API\
--   Modular MVC architecture\
--   Secure auth system (JWT, refresh tokens, cookies)\
--   Centralized error handling & logging\
--   Auto-expiring bookings scheduler\
--   Stripe webhook event processing\
--   Admin and Host analytics engines\
+-   Strict TypeScript typing across entire API
+-   Modular MVC architecture
+-   Secure auth system (JWT, refresh tokens, cookies)
+-   Centralized error handling & logging
+-   Auto-expiring bookings scheduler
+-   Stripe webhook event processing
+-   Admin and Host analytics engines
 -   Database indexing for optimized queries
 
 ------------------------------------------------------------------------
@@ -234,10 +231,10 @@ vercel --prod
 
 # 🤝 Contributing
 
-1.  Fork repository\
-2.  Create a feature branch\
-3.  Commit changes\
-4.  Push branch\
+1.  Fork repository
+2.  Create a feature branch
+3.  Commit changes
+4.  Push branch
 5.  Submit PR
 
 Follows TypeScript, ESLint & best practices.
@@ -246,17 +243,15 @@ Follows TypeScript, ESLint & best practices.
 
 # 📝 License
 
--   **Frontend:** MIT\
+-   **Frontend:** MIT
 -   **Backend:** ISC
 
 ------------------------------------------------------------------------
 
 # 👨‍💻 Author
 
-**Jubayer Alam**\
+**Jubayer Alam**
 GitHub: https://github.com/jubayer98
 
-::: {align="center"}
-⭐ *Star this repository if you love the project!*\
+⭐ *Star this repository if you love the project!*
 Made with ❤️ by **Jubayer Alam**
-:::
